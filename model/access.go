@@ -6,6 +6,7 @@ import (
 
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
+	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
 type Usuario struct {
@@ -47,7 +48,10 @@ func List(app string, ini time.Time, fim time.Time) ([]Access, error) {
 			{"$lte", fim},
 		}},
 	}
-	cur, err := db.Collection("access").Find(nil, filter)
+	opts := &options.FindOptions{
+		Sort: bson.D{{"_id", -1}},
+	}
+	cur, err := db.Collection("access").Find(nil, filter, opts)
 	if err != nil {
 		return nil, fmt.Errorf("list: %w", err)
 	}
