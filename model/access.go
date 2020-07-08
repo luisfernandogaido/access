@@ -37,9 +37,6 @@ func List(app string, ini time.Time, fim time.Time) ([]Access, error) {
 	if d > time.Hour*24 {
 		return nil, fmt.Errorf("list: ini e fim não podem ter diferença de mais de 1 dia")
 	}
-	fmt.Println(d)
-
-	fmt.Println()
 	if app == "" {
 		return nil, fmt.Errorf("list: app obrigatório`")
 	}
