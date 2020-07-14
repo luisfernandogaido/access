@@ -1,6 +1,6 @@
 cd C:\Users\lfgai\Desktop
 mongodump --host 167.99.55.99 --db php --username gaido --password 1000sonhosreais --authenticationDatabase admin
-7z a C:\Users\lfgai\Desktop\fipe.zip C:\Users\lfgai\Desktop\dump
+7z a C:\Users\lfgai\Desktop\php.zip C:\Users\lfgai\Desktop\dump
 mongo
 use php;
 db.dropDatabase();
