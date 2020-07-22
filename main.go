@@ -14,17 +14,13 @@ const token = "yjZFwp3d5ww1h4ja6Uya"
 var apps = map[string]bool{"profinanc": true, "consorcio": true}
 
 func main() {
-	http.HandleFunc("/", index)
+	http.HandleFunc("/", aut(index))
 	if err := http.ListenAndServe(":4013", nil); err != nil {
 		log.Fatal(err)
 	}
 }
 
 func index(w http.ResponseWriter, r *http.Request) {
-	if r.URL.Query().Get("token") != "yjZFwp3d5ww1h4ja6Uya" {
-		http.Error(w, "não autorizado", http.StatusUnauthorized)
-		return
-	}
 	fim := time.Now()
 	ini := fim.Add(-time.Hour)
 	var err error
@@ -59,4 +55,23 @@ func printJson(w http.ResponseWriter, v interface{}) error {
 	dec := json.NewEncoder(w)
 	dec.SetIndent("", " ")
 	return dec.Encode(v)
+}
+
+func aut(f http.HandlerFunc) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		token := r.URL.Query().Get("token")
+		if token != "yjZFwp3d5ww1h4ja6Uya" {
+			http.Error(w, "não autorizado", http.StatusUnauthorized)
+			return
+		}
+		if err := model.ApiAcessInsertCountMinute(token, r.RemoteAddr); err != nil {
+			code := http.StatusInternalServerError
+			if err == model.ErrToManyRequestes {
+				code = http.StatusTooManyRequests
+			}
+			http.Error(w, err.Error(), code)
+			return
+		}
+		f(w, r)
+	}
 }
