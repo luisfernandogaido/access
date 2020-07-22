@@ -62,7 +62,6 @@ func ApiAcessInsertCountMinute(token, addr string) error {
 	if err != nil {
 		return fmt.Errorf("apiacessinsertcountminute: %w", err)
 	}
-	fmt.Println(count)
 	if count > maxCountMinute {
 		return ErrToManyRequestes
 	}
