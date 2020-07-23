@@ -66,7 +66,7 @@ func aut(f http.HandlerFunc) http.HandlerFunc {
 		}
 		if err := model.ApiAcessInsertCountMinute(token, r.RemoteAddr); err != nil {
 			code := http.StatusInternalServerError
-			if err == model.ErrToManyRequestes {
+			if err == model.ErrToManyRequests {
 				code = http.StatusTooManyRequests
 			}
 			http.Error(w, err.Error(), code)

@@ -13,7 +13,7 @@ const (
 	maxCountMinute = 1
 )
 
-var ErrToManyRequestes = errors.New("too many requests")
+var ErrToManyRequests = errors.New("too many requests")
 
 type ApiAccess struct {
 	Id     primitive.ObjectID `json:"id" bson:"_id"`
@@ -63,7 +63,7 @@ func ApiAcessInsertCountMinute(token, addr string) error {
 		return fmt.Errorf("apiacessinsertcountminute: %w", err)
 	}
 	if count > maxCountMinute {
-		return ErrToManyRequestes
+		return ErrToManyRequests
 	}
 	return nil
 }
