@@ -64,7 +64,7 @@ func aut(f http.HandlerFunc) http.HandlerFunc {
 			http.Error(w, "não autorizado", http.StatusUnauthorized)
 			return
 		}
-		if err := model.ApiAcessInsertCountMinute(token, r.RemoteAddr); err != nil {
+		if err := model.ApiAcessInsertCountMinute(token, r.Header.Get("X-Real-IP")); err != nil {
 			code := http.StatusInternalServerError
 			if err == model.ErrToManyRequests {
 				code = http.StatusTooManyRequests
