@@ -8,8 +8,8 @@ import (
 )
 
 func main() {
-	const n = 128
-	const c = 32
+	const n = 1024
+	const c = 128
 	sem := make(chan struct{}, c)
 	for i := 0; i < n; i++ {
 		sem <- struct{}{}
@@ -29,7 +29,7 @@ func main() {
 }
 
 func list() (int, error) {
-	res, err := http.Get("http://localhost:4013/?" +
+	res, err := http.Get("https://access.gaido.dev?" +
 		"ini=2020-07-10T00:00:00&" +
 		"fim=2020-07-10T23:59:59&" +
 		"app=profinanc&" +
